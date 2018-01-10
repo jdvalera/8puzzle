@@ -50,7 +50,7 @@ predecessor   search node    neighbor       neighbor      neighbor
 **Game tree.** One way to view the computation is as a game tree, where each search node is a node in the game tree and the children of a node correspond to its neighboring search nodes. The root of the game tree is the initial search node; the internal nodes have already been processed; the leaf nodes are maintained in a priority queue; at each step, the A* algorithm removes the node with the smallest priority from the priority queue and processes it (by adding its children to both the game tree and the priority queue).
 
 <p align="center">
-<img src="" width="50%">
+<img src="/8puzzle-game-tree.png" width="70%">
 </p>
 
 **Detecting unsolvable puzzles.** Not all initial boards can lead to the goal board by a sequence of legal moves, including the two below:
