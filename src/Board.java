@@ -77,7 +77,11 @@ public class Board {
 	
 	// a board that is obtained by exchanging any pair of blocks
 	public Board twin() {
-	
+		for (int i = 0; i < board.length; i++) {
+			if (board[i] != 0) {
+				
+			}
+		}
 		return null;
 		
 	}
@@ -118,6 +122,13 @@ public class Board {
 		xy[0] = i % width;
 		xy[1] = i / width;
 		return xy;
+	}
+	
+	private void exch(int i, int j) {
+		int temp = 0;
+		temp = board[i];
+		board[i] = board[j];
+		board[j] = temp;
 	}
 	
 	private static int[][] boardFromArray(int[] arr, int width) {
