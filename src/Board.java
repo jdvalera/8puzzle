@@ -148,6 +148,12 @@ public class Board {
 		board[j] = temp;
 	}
 	
+	private boolean checkBoundary(int x) {
+		if (x < 0 || x > board.length)
+			return false;
+		return true;
+	}
+	
 	private static int[][] boardFromArray(int[] arr, int width) {
 		int[][] test = new int[width][width];
 		int idx = 0;
