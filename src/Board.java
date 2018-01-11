@@ -187,7 +187,8 @@ public class Board {
 		
 		// create a board for each neighbor
 		for (int i = 0; i < blocks.size(); i++) {
-			
+			int[] temp;
+			temp = copy1DTo1D(board);
 		}
 		
 		return null;
@@ -238,12 +239,15 @@ public class Board {
 		return arr2D;
 	}
 	
-	private void copy1DTo1D(int[] a, int[] b) {
+	private int[] copy1DTo1D(int[] a) {
+		int[] b = new int[a.length];
 		if (a.length != b.length)
-			return;
+			return null;
 		for (int i = 0; i < a.length; i++) {
-			a[i] = b[i];
+			b[i] = a[i];
 		}
+		
+		return b;
 	}
 	
 	private boolean checkBoundary(int row, int col) {
