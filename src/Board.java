@@ -35,8 +35,8 @@ public class Board {
 	// number of blocks out of place
 	public int hamming() {
 		int sum = 0;
-		for (int i = 0; i < board.length - offset; i++) {
-			if (board[i] != i + offset)
+		for (int i = 0; i < board.length; i++) {
+			if (board[i] != i + offset && board[i] != 0)
 				sum++;
 		}
 		return sum;
@@ -54,11 +54,11 @@ public class Board {
 			if (board[i] != i + offset && board[i] != 0) {
 				x1 = xyFrom1D(i)[0];
 				y1 = xyFrom1D(i)[1];
-				System.out.println("Board Content: " + board[i]);
+				//System.out.println("Board Content: " + board[i]);
 				x2 = xyFrom1D(board[i] - offset)[0];
 				y2 = xyFrom1D(board[i] - offset)[1];
-				System.out.println("x1: " + x1 + " y1: " + y1 + " x2: " + x2 + " y2 " + y2);
-				System.out.println("Distance: " + (Math.abs(x1-x2) + Math.abs(y1-y2)));
+				//System.out.println("x1: " + x1 + " y1: " + y1 + " x2: " + x2 + " y2 " + y2);
+				//System.out.println("Distance: " + (Math.abs(x1-x2) + Math.abs(y1-y2)));
 				sum = sum + ( Math.abs(x1-x2) + Math.abs(y1-y2) );
 			}
 		}
@@ -119,30 +119,44 @@ public class Board {
 		return xy;
 	}
 	
+	private static int[][] boardFromArray(int[] arr, int width) {
+		int[][] test = new int[width][width];
+		int idx = 0;
+		
+		for (int i = 0; i < test.length; i++) {
+			for (int j = 0; j < test.length; j++) {
+				test[i][j] = arr[idx++];
+			}
+		}
+		
+		return test;
+	}
+	
 	// unit test
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
 		int[][] test = new int[3][3];
+		int[][] goalBoard = new int[3][3];
 		int [] numbers = { 8, 1, 3, 4, 0, 2, 7, 6, 5};
 		int [] goal = {1, 2, 3, 4, 5, 6, 7, 8, 0};
 		int idx = 0;
-		for (int i = 0; i < test.length; i++) {
-			for (int j = 0; j < test.length; j++) {
-				test[i][j] = numbers[idx++];
-			}
-		}
 		
+		test = boardFromArray(numbers, 3);
+		goalBoard = boardFromArray(goal, 3);
+		
+		/*
 		for (int i = 0; i < test.length; i++) {
 			for (int j = 0; j < test.length; j++) {
 				System.out.print(test[i][j] + " ");
 			}
 			System.out.println();
-		}
+		}*/
 		
 		Board board = new Board(test);
 		System.out.println(board);
 		
+		System.out.println("Is it goal board? " + board.isGoal());
 		System.out.println("Manhattan: " + board.manhattan());
 		System.out.println("Hamming: " + board.hamming());
 
