@@ -22,9 +22,9 @@ public class Board {
 			for (int j = 0; j < blocks[0].length; j++) {
 				board[xyTo1D(i,j)] = blocks[i][j];
 			}
-		}
-		
+		}	
 	}
+	
 	
 	// board dimension n
 	public int dimension() {
@@ -81,25 +81,48 @@ public class Board {
 		int col = 0;
 		int up = 0, right = 0, down = 0, left = 0;
 		
+		int[][] twin2d = new int[width][width];
+		int[] twin1d = new int[board.length];
+		
+		// copy board to twin1d
 		for (int i = 0; i < board.length; i++) {
-			if (board[i] != 0) {
+			twin1d[i] = board[i];
+		}
+		
+		// check for non zero block in twin1d
+		// exchange non zero block with another non zero block
+		for (int i = 0; i < twin1d.length; i++) {
+			if (twin1d[i] != 0) {
 				col = xyFrom1D(i)[0];
 				row = xyFrom1D(i)[1];
-				up = xyTo1D(row - 1, col);
-				right = xyTo1D(row, col + 1);
-				down = xyTo1D(row + 1, col);
-				left = xyTo1D(row, col - 1);
-				
-				
+						
+				if (checkBoundary(row - 1, col)) {
+					up = xyTo1D(row - 1, col);
+					exch1D(twin1d, i, up);
+				} else if (checkBoundary(row, col + 1)) {
+					right = xyTo1D(row, col + 1);
+					exch1D(twin1d, i, right);
+				} else if (checkBoundary(row + 1, col)) {
+					down = xyTo1D(row + 1, col);
+					exch1D(twin1d, i, down);
+				} else if (checkBoundary(row, col - 1)) {
+					left = xyTo1D(row, col - 1);
+					exch1D(twin1d, i, left);
+				}
+						
+				break;
 			}
 		}
+		
+		// copy 1d twin to 2d twin
+		twin2d = copy1DTo2D(twin1d, this.width);
 				
-				System.out.println("Board position 4: " + board[4]);
-				System.out.println("Up: " + board[up]);
-				System.out.println("Right: " + board[right]);
-				System.out.println("Down: " + board[down]);
-				System.out.println("Left: " + board[left]);
-		return null;
+		//System.out.println("Board position 4: " + board[4]);
+		//System.out.println("Up: " + board[up]);
+		//System.out.println("Right: " + board[right]);
+		//System.out.println("Down: " + board[down]);
+		//System.out.println("Left: " + board[left]);
+		return new Board(twin2d);
 		
 	}
 	
@@ -141,11 +164,22 @@ public class Board {
 		return xy;
 	}
 	
-	private void exch(int i, int j) {
+	// exchange index values in an array
+	private void exch1D(int[] arr, int i, int j) {
 		int temp = 0;
-		temp = board[i];
-		board[i] = board[j];
-		board[j] = temp;
+		temp = arr[i];
+		arr[i] = arr[j];
+		arr[j] = temp;
+	}
+	
+	private int[][] copy1DTo2D(int[] arr, int width) {
+		int[][] arr2D = new int[width][width];
+		for (int i = 0; i < arr.length; i++) {
+			int x = xyFrom1D(i)[0];
+			int y = xyFrom1D(i)[1];
+			arr2D[y][x] = arr[i];
+		}
+		return arr2D;
 	}
 	
 	private boolean checkBoundary(int row, int col) {
@@ -194,7 +228,10 @@ public class Board {
 		System.out.println("Is it goal board? " + board.isGoal());
 		System.out.println("Manhattan: " + board.manhattan());
 		System.out.println("Hamming: " + board.hamming());
-
+		
+		Board twin;
+		twin = board.twin();
+		System.out.println(twin);
 	}
 
 }
