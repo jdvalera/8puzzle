@@ -282,7 +282,7 @@ public class Board {
 		
 		int[][] test = new int[3][3];
 		int[][] goalBoard = new int[3][3];
-		int [] numbers = { 8, 1, 3, 4, 2, 0, 7, 6, 5};
+		int [] numbers = { 8, 1, 3, 4, 0, 2, 7, 6, 5};
 		int [] goal = {1, 2, 3, 4, 5, 6, 7, 8, 0};
 		int idx = 0;
 		
@@ -305,17 +305,22 @@ public class Board {
 		System.out.println("Hamming: " + board.hamming());
 		System.out.println();
 		
-		//Board twin;
-		//twin = board.twin();
-		//System.out.println("Twin");
-		//System.out.println(twin);
-		
 		int n = 1;
 		Iterable<Board> neighbors = board.neighbors();
 		for (Board b : neighbors) {
 			System.out.println("Neighbor " + n++);
 			System.out.println(b);
 		}
+		
+		Board twin;
+		twin = board.twin();
+		System.out.println("Twin");
+		System.out.println(twin);
+		
+		Board boardClone = new Board(test);
+		System.out.println("Is board equal to twin? " + board.equals(twin));
+		System.out.println("Is board equal to board? " + board.equals(board));
+		System.out.println("Is board equal to null? " + board.equals(null));
+		System.out.println("Is board equal to boardClone? " + board.equals(boardClone));
 	}
-
 }
