@@ -238,6 +238,13 @@ public class Board {
 		return arr2D;
 	}
 	
+	private void copy1DTo1D(int[] a, int[] b) {
+		if (a.length != b.length)
+			return;
+		for (int i = 0; i < a.length; i++) {
+			a[i] = b[i];
+		}
+	}
 	
 	private boolean checkBoundary(int row, int col) {
 		if(row < 0 || row > board.length || col < 0 || col > width)
