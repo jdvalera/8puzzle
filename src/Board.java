@@ -128,7 +128,15 @@ public class Board {
 	
 	// does this board equal y?
 	public boolean equals(Object y) {
-		return false;
+		if (y == this) return true;
+		if (y == null) return false;
+		if (y.getClass() != this.getClass()) return false;
+		Board that = (Board) y;
+		for (int i = 0; i < board.length; i ++) {
+			if (this.board[i] != that.board[i])
+				return false;
+		}
+		return true;
 		
 	}
 	
