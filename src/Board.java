@@ -50,7 +50,10 @@ public class Board {
 	
 	// is this board the goal board?
 	public boolean isGoal() {
-		return false;
+		for (int i = 0; i < board.length; i++)
+			if (board[i] != i+1)
+				return false;
+		return true;
 		
 	}
 	
