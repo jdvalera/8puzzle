@@ -14,6 +14,8 @@ public class Board {
 				throw new java.lang.IllegalArgumentException();
 		}
 		
+		width = blocks.length;
+		board = new int[width*width];
 		
 		for (int i = 0; i < blocks.length; i++) {
 			for (int j = 0; j < blocks[0].length; j++) {
@@ -25,7 +27,7 @@ public class Board {
 	
 	// board dimension n
 	public int dimension() {
-		return 0;
+		return width;
 		
 	}
 	
