@@ -1,13 +1,25 @@
 
 public class Board {
 	
-	int[] board;
-	int offset = 1;
-	int width;
+	private int[] board;
+	private int offset = 1;
+	private int width;
 	
 	// construct a board from an n-by-n array of blocks
 	// (where blocks[i][j] = block in row i, column j)
 	public Board(int[][] blocks) {
+		
+		for (int i = 1; i < blocks.length; i++) {
+			if (blocks[i-1].length != blocks[i].length)
+				throw new java.lang.IllegalArgumentException();
+		}
+		
+		
+		for (int i = 0; i < blocks.length; i++) {
+			for (int j = 0; j < blocks[0].length; j++) {
+				
+			}
+		}
 		
 	}
 	
@@ -98,6 +110,10 @@ public class Board {
 	// unit test
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		
+		int[][] test = new int[2][3];
+		System.out.println(test.length);
+		System.out.println(test[0].length);
 
 	}
 
