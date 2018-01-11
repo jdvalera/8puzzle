@@ -83,11 +83,22 @@ public class Board {
 		
 		for (int i = 0; i < board.length; i++) {
 			if (board[i] != 0) {
-				col = xyFrom1D(board[i] - offset)[0];
-				row = xyFrom1D(board[i] - offset)[1];
-				//up = xyTo1D()
+				col = xyFrom1D(i)[0];
+				row = xyFrom1D(i)[1];
+				up = xyTo1D(row - 1, col);
+				right = xyTo1D(row, col + 1);
+				down = xyTo1D(row + 1, col);
+				left = xyTo1D(row, col - 1);
+				
+				
 			}
 		}
+				
+				System.out.println("Board position 4: " + board[4]);
+				System.out.println("Up: " + board[up]);
+				System.out.println("Right: " + board[right]);
+				System.out.println("Down: " + board[down]);
+				System.out.println("Left: " + board[left]);
 		return null;
 		
 	}
