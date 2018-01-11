@@ -1,13 +1,18 @@
 import edu.princeton.cs.algs4.MinPQ;
+import edu.princeton.cs.algs4.Queue;
 
 public class Solver {
 	
 	// find a solution to the initial board (using the A* algorithm)
 	public Solver(Board initial) {
-		Iterable<Board> neighbors = initial.neighbors();
+		Queue<Board> neighbors = (Queue<Board>) initial.neighbors();
+		MinPQ<SearchNode> searchNodes = new MinPQ<SearchNode>();
 		SearchNode searchNode = new SearchNode(initial, 0, null);
 		
-		
+		searchNodes.insert(searchNode);
+		System.out.println(searchNodes.min().getBoard());
+		System.out.println(neighbors.dequeue());
+		System.out.println(neighbors.size());
 	}
 	
 	// is the initial board solvable?
@@ -55,6 +60,11 @@ public class Solver {
 		public int getMoves() {
 			return moves;
 		}
+		
+		public SearchNode getPredecessor() {
+			SearchNode temp = predecessor;
+			return temp;
+		}
 
 		@Override
 		public int compareTo(SearchNode o) {
@@ -70,7 +80,18 @@ public class Solver {
 	// solve a slider puzzle
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+		int [] numbers = { 8, 1, 3, 4, 0, 2, 7, 6, 5};
+		int [] goal = {1, 2, 3, 4, 5, 6, 7, 8, 0};
+		int[][] blocks = new int[3][3];
+		int idx = 0;
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++) {
+				blocks[i][j] = numbers[idx++];
+			}
+		}
+		Board board = new Board(blocks);
+		
+		Solver solver = new Solver(board);
+		
 	}
-
 }
