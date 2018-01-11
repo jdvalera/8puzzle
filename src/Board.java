@@ -77,9 +77,15 @@ public class Board {
 	
 	// a board that is obtained by exchanging any pair of blocks
 	public Board twin() {
+		int row = 0;
+		int col = 0;
+		int up = 0, right = 0, down = 0, left = 0;
+		
 		for (int i = 0; i < board.length; i++) {
 			if (board[i] != 0) {
-				
+				col = xyFrom1D(board[i] - offset)[0];
+				row = xyFrom1D(board[i] - offset)[1];
+				//up = xyTo1D()
 			}
 		}
 		return null;
@@ -112,15 +118,15 @@ public class Board {
 	}
 	
 	// helper method for 2d to 1d array
-	private int xyTo1D(int x, int y) {
-		return ((y) % width) + (width * (x));
+	private int xyTo1D(int row, int col) {
+		return ((col) % width) + (width * (row));
 	}
 	
 	// helper method for 1d to 2d array
 	private int[] xyFrom1D(int i) {
 		int [] xy = new int[2];
-		xy[0] = i % width;
-		xy[1] = i / width;
+		xy[0] = i % width; // col
+		xy[1] = i / width; // row
 		return xy;
 	}
 	
