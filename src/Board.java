@@ -1,7 +1,7 @@
 
 public class Board {
 	
-	public int[] board;
+	private int[] board;
 	private int offset = 1;
 	private int width;
 	
@@ -77,6 +77,7 @@ public class Board {
 	
 	// a board that is obtained by exchanging any pair of blocks
 	public Board twin() {
+	
 		return null;
 		
 	}
