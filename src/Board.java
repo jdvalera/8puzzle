@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+
+import edu.princeton.cs.algs4.Queue;
 
 public class Board {
 	
@@ -142,6 +145,51 @@ public class Board {
 	
 	// all neighboring boards
 	public Iterable<Board> neighbors() {
+		Queue<Board> neighbors = new Queue<Board>();
+		int emptyIndex;
+		int row = 0;
+		int col = 0;
+		int up = 0, right = 0, down = 0, left = 0;
+		ArrayList<Integer> blocks = new ArrayList<Integer>();
+		
+		// look for empty block position
+		// get empty position and every position it can exchange with
+		// add all positions into blocks list
+		for (emptyIndex = 0; emptyIndex < board.length; emptyIndex++) {
+			if (board[emptyIndex] == 0) {
+				
+				col = xyFrom1D(emptyIndex)[0];
+				row = xyFrom1D(emptyIndex)[1];
+				
+				if (checkBoundary(row - 1, col)) {
+					up = xyTo1D(row - 1, col);
+					blocks.add(up);
+				}
+				
+				if (checkBoundary(row, col + 1)) {
+					right = xyTo1D(row, col + 1);
+					blocks.add(right);
+				}
+				
+				if (checkBoundary(row + 1, col)) {
+					down = xyTo1D(row + 1, col);
+					blocks.add(down);
+				}
+				
+				if (checkBoundary(row, col - 1)) {
+					left = xyTo1D(row, col - 1);
+					blocks.add(left);
+				}
+				
+				break;
+			}
+		}
+		
+		// create a board for each neighbor
+		for (int i = 0; i < blocks.size(); i++) {
+			
+		}
+		
 		return null;
 		
 	}
@@ -189,6 +237,7 @@ public class Board {
 		}
 		return arr2D;
 	}
+	
 	
 	private boolean checkBoundary(int row, int col) {
 		if(row < 0 || row > board.length || col < 0 || col > width)
