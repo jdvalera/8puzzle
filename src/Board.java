@@ -185,13 +185,20 @@ public class Board {
 			}
 		}
 		
-		// create a board for each neighbor
+		// create temp copy of board
+		// exchange blocks and turn array into 2d
+		// create Board and enqueue it
 		for (int i = 0; i < blocks.size(); i++) {
-			int[] temp;
-			temp = copy1DTo1D(board);
+			int[] temp1d;
+			int[][] temp2d;
+			temp1d = copy1DTo1D(board);
+			exch1D(temp1d, emptyIndex, blocks.get(i));
+			temp2d = copy1DTo2D(temp1d, this.width);
+			Board tempBoard = new Board(temp2d);
+			neighbors.enqueue(tempBoard);
 		}
 		
-		return null;
+		return neighbors;
 		
 	}
 	
@@ -251,7 +258,7 @@ public class Board {
 	}
 	
 	private boolean checkBoundary(int row, int col) {
-		if(row < 0 || row > board.length || col < 0 || col > width)
+		if(row < 0 || row >= board.length || col < 0 || col >= width)
 			return false;
 		return true;
 	}
@@ -275,7 +282,7 @@ public class Board {
 		
 		int[][] test = new int[3][3];
 		int[][] goalBoard = new int[3][3];
-		int [] numbers = { 8, 1, 3, 4, 0, 2, 7, 6, 5};
+		int [] numbers = { 8, 1, 3, 4, 2, 0, 7, 6, 5};
 		int [] goal = {1, 2, 3, 4, 5, 6, 7, 8, 0};
 		int idx = 0;
 		
@@ -296,10 +303,19 @@ public class Board {
 		System.out.println("Is it goal board? " + board.isGoal());
 		System.out.println("Manhattan: " + board.manhattan());
 		System.out.println("Hamming: " + board.hamming());
+		System.out.println();
 		
-		Board twin;
-		twin = board.twin();
-		System.out.println(twin);
+		//Board twin;
+		//twin = board.twin();
+		//System.out.println("Twin");
+		//System.out.println(twin);
+		
+		int n = 1;
+		Iterable<Board> neighbors = board.neighbors();
+		for (Board b : neighbors) {
+			System.out.println("Neighbor " + n++);
+			System.out.println(b);
+		}
 	}
 
 }
