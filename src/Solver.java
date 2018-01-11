@@ -5,8 +5,7 @@ public class Solver {
 	// find a solution to the initial board (using the A* algorithm)
 	public Solver(Board initial) {
 		Iterable<Board> neighbors = initial.neighbors();
-		Board predecessor = null;
-		Board searchNode = initial;
+		SearchNode searchNode = new SearchNode(initial, 0, null);
 		
 		
 	}
@@ -29,7 +28,7 @@ public class Solver {
 		
 	}
 	
-	private class SearchNode implements Comparable<Board> {
+	private class SearchNode implements Comparable<SearchNode> {
 		
 		private SearchNode predecessor = null;
 		private Board current = null;
@@ -47,11 +46,24 @@ public class Solver {
 		public int getPriority() {
 			return priority;
 		}
+		
+		public Board getBoard() {
+			Board temp = current;
+			return temp;
+		}
+		
+		public int getMoves() {
+			return moves;
+		}
 
 		@Override
-		public int compareTo(Board o) {
-			// TODO Auto-generated method stub
-			return 0;
+		public int compareTo(SearchNode o) {
+			if (this.priority > o.getPriority())
+				return 1;
+			else if (this.priority < o.getPriority())
+				return -1;
+			else
+				return 0;
 		}
 	}
 	
