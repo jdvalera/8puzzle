@@ -184,12 +184,12 @@ public class Board {
 				break;
 			}
 		}
-		System.out.println("EMPTY " + emptyIndex);
+		//System.out.println("EMPTY " + emptyIndex);
 		// create temp copy of board
 		// exchange blocks and turn array into 2d
 		// create Board and enqueue it
 		for (int i = 0; i < blocks.size(); i++) {
-			System.out.println("BLOCKS " + blocks.get(i));
+			//System.out.println("BLOCKS " + blocks.get(i));
 			int[] temp1d;
 			int[][] temp2d;
 			temp1d = copy1DTo1D(board);
@@ -298,7 +298,7 @@ public class Board {
 			System.out.println();
 		}*/
 		
-		Board board = new Board(goalBoard);
+		Board board = new Board(test);
 		System.out.println(board);
 		
 		System.out.println("Is it goal board? " + board.isGoal());
