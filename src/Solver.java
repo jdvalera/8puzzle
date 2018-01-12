@@ -33,9 +33,10 @@ public class Solver {
 		boolean solved = false;
 		boolean twinSolved = false;
 		//System.out.println("Get Board: " + searchNodes.delMin().getBoard());
+		SearchNode current = null;
 		
 		while (!solved && !twinSolved) {
-			SearchNode current = searchNodes.delMin();
+			current = searchNodes.delMin();
 			SearchNode predecessor = current.getPredecessor();
 			Board temp = current.getBoard();
 			solved = temp.isGoal();
@@ -104,6 +105,7 @@ public class Solver {
 	// sequence of boards in a shortest solution; null if unsolvable
 	public Iterable<Board> solution() {
 		Stack<Board> boards = new Stack<Board>();
+		SearchNode lastNode = this.lastNode;
 		if (this.isSolvable()) {
 			while (lastNode.getPredecessor() != null) {
 				boards.push(lastNode.getBoard());
@@ -112,8 +114,7 @@ public class Solver {
 			boards.push(lastNode.getBoard());
 		return boards;
 		}
-		return null;
-		
+		return null;	
 	}
 	
 	private class SearchNode implements Comparable<SearchNode> {
@@ -221,6 +222,5 @@ public class Solver {
 	        for (Board board : solver.solution())
 	            StdOut.println(board);
 	    }
-		
 	}
 }
