@@ -5,14 +5,39 @@ public class Solver {
 	
 	// find a solution to the initial board (using the A* algorithm)
 	public Solver(Board initial) {
-		Queue<Board> neighbors = (Queue<Board>) initial.neighbors();
-		MinPQ<SearchNode> searchNodes = new MinPQ<SearchNode>();
-		SearchNode searchNode = new SearchNode(initial, 0, null);
+		int moves = 0;
+		Queue<Board> neighbors;
 		
+		MinPQ<SearchNode> searchNodes = new MinPQ<SearchNode>();
+		SearchNode searchNode = new SearchNode(initial, moves, null);
 		searchNodes.insert(searchNode);
-		System.out.println(searchNodes.min().getBoard());
-		System.out.println(neighbors.dequeue());
-		System.out.println(neighbors.size());
+		
+		boolean solved = false;
+		//System.out.println("Get Board: " + searchNodes.delMin().getBoard());
+		
+		while (!solved) {
+			SearchNode current = searchNodes.delMin();
+			SearchNode predecessor = current.getPredecessor();
+			Board temp = current.getBoard();
+			solved = temp.isGoal();
+			
+			moves++;
+			neighbors = (Queue<Board>) temp.neighbors();
+			System.out.println(temp);
+			while(neighbors.size() > 0) {
+				Board board = neighbors.dequeue();
+				
+				if (predecessor != null && predecessor.getBoard().equals(board))
+					continue;
+				
+				SearchNode neighborNode = new SearchNode(board, moves, current);
+				searchNodes.insert(neighborNode);
+			}
+		}
+		
+		//System.out.println(searchNodes.min().getBoard());
+		//System.out.println(neighbors.dequeue());
+		//System.out.println(neighbors.size());
 	}
 	
 	// is the initial board solvable?
@@ -80,7 +105,7 @@ public class Solver {
 	// solve a slider puzzle
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		int [] numbers = { 8, 1, 3, 4, 0, 2, 7, 6, 5};
+		int [] numbers = { 0, 1, 3, 4, 2, 5, 7, 8, 6 };
 		int [] goal = {1, 2, 3, 4, 5, 6, 7, 8, 0};
 		int[][] blocks = new int[3][3];
 		int idx = 0;
