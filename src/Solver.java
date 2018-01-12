@@ -1,14 +1,14 @@
 import edu.princeton.cs.algs4.MinPQ;
 import edu.princeton.cs.algs4.Queue;
+import edu.princeton.cs.algs4.Stack;
 
 public class Solver {
 	
-	private Board initialBoard;
+	private SearchNode lastNode;
 	private boolean solvable;
 	
 	// find a solution to the initial board (using the A* algorithm)
 	public Solver(Board initial) {
-		initialBoard = initial;
 		int moves = 0;
 		int twinMoves = 0;
 		
@@ -41,7 +41,7 @@ public class Solver {
 			
 			neighbors = (Queue<Board>) temp.neighbors();
 			twinNeighbors = (Queue<Board>) twinTemp.neighbors();
-			System.out.println("Moves: " + moves + "\n" + temp);
+			//System.out.println("Moves: " + moves + "\n" + temp);
 			
 			while(neighbors.size() > 0) {
 				Board board = neighbors.dequeue();
@@ -65,6 +65,7 @@ public class Solver {
 			
 			moves++;
 			twinMoves++;
+			lastNode = current;
 		}
 		
 		solvable = !twinSolved;
@@ -84,11 +85,14 @@ public class Solver {
 	
 	// sequence of boards in a shortest solution; null if unsolvable
 	public Iterable<Board> solution() {
-		return null;
-		
-	}
-	
-	private void solveBoard(Board initial) {
+		Stack<Board> boards = new Stack<Board>();
+		if (this.isSolvable()) {
+			while (lastNode.getPredecessor() != null) {
+				boards.push(lastNode.getBoard());
+				lastNode = lastNode.getPredecessor();
+			}
+		}
+		return boards;
 		
 	}
 	
@@ -139,6 +143,8 @@ public class Solver {
 	// solve a slider puzzle
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		Iterable<Board> solution;
+		
 		int [] numbers = { 0, 1, 3, 4, 2, 5, 7, 8, 6 };
 		int [] goal = {1, 2, 3, 4, 5, 6, 7, 8, 0};
 		int [] unsolvable = { 1, 2, 3, 4, 5, 6, 8, 7, 0 };
@@ -148,7 +154,7 @@ public class Solver {
 		int idx = 0;
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
-				blocks[i][j] = unsolvable[idx++];
+				blocks[i][j] = numbers[idx++];
 			}
 		}
 		
@@ -161,11 +167,14 @@ public class Solver {
 		}
 		
 		Board board = new Board(blocks);
-		System.out.println(board);
-		System.out.println("TWIN: " + board.twin());
+		//System.out.println(board);
+		//System.out.println("TWIN: " + board.twin());
 		
 		Solver solver = new Solver(board);
 		System.out.println("Is solvable? " + solver.isSolvable());
+		solution = solver.solution();
+		for (Board b : solution)
+			System.out.println(b);
 		
 	}
 }
