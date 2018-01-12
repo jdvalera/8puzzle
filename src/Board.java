@@ -101,19 +101,35 @@ public class Board {
 						
 				if (checkBoundary(row - 1, col)) {
 					up = xyTo1D(row - 1, col);
-					exch1D(twin1d, i, up);
-				} else if (checkBoundary(row, col + 1)) {
-					right = xyTo1D(row, col + 1);
-					exch1D(twin1d, i, right);
-				} else if (checkBoundary(row + 1, col)) {
-					down = xyTo1D(row + 1, col);
-					exch1D(twin1d, i, down);
-				} else if (checkBoundary(row, col - 1)) {
-					left = xyTo1D(row, col - 1);
-					exch1D(twin1d, i, left);
+					if (twin1d[up] != 0) {
+						exch1D(twin1d, i, up);
+						break;
+					}
 				}
-						
-				break;
+				
+				if (checkBoundary(row, col + 1)) {
+					right = xyTo1D(row, col + 1);
+					if (twin1d[right] != 0) {
+						exch1D(twin1d, i, right);
+						break;
+					}
+				}
+				
+				if (checkBoundary(row + 1, col)) {
+					down = xyTo1D(row + 1, col);
+					if (twin1d[down] != 0) {
+						exch1D(twin1d, i, down);
+						break;
+					}
+				}
+				
+				if (checkBoundary(row, col - 1)) {
+					left = xyTo1D(row, col - 1);
+					if (twin1d[left] != 0) {
+						exch1D(twin1d, i, left);
+						break;
+					}
+				}
 			}
 		}
 		
