@@ -151,6 +151,8 @@ public class Board {
 		if (y == null) return false;
 		if (y.getClass() != this.getClass()) return false;
 		Board that = (Board) y;
+		if (that.dimension() != this.dimension())
+			return false;
 		for (int i = 0; i < board.length; i ++) {
 			if (this.board[i] != that.board[i])
 				return false;
